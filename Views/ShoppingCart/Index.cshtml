@@ -1,0 +1,72 @@
+﻿@model List<MarketVerse.Models.CartItem>
+@{
+    ViewBag.Title = "Shopping Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<main style="margin: 40px 10px 10px 10px; padding: 20px;" class="rounded shadow">
+
+    <div class="container mt-4">
+        <h2>Your Shopping Cart</h2>
+
+        @if (Model == null || Model.Count == 0)
+        {
+            <p>Your shopping cart is empty.</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td>@item.Price.ToString("C")</td>
+                            <td>
+                                <button class="btn btn-sm btn-info" onclick="decreaseQuantity(@item.ProductId)">-</button>
+                                @item.Quantity
+                                <button class="btn btn-sm btn-info" onclick="increaseQuantity(@item.ProductId)">+</button>
+                            </td>
+                            <td>@(item.Price * item.Quantity)</td>
+                            <td>
+                                @Html.ActionLink("Remove", "RemoveFromCart", "ShoppingCart", new { productId = item.ProductId }, null)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+            <div class="text-right">
+                <h4>Total: @Model.Sum(item => item.Price * item.Quantity).ToString("C")</h4>
+                <a href="/Shoppingcart/Processcart" class="btn btn-success">Checkout</a>
+            </div>
+        }
+    </div>
+</main>
+
+@section scripts{
+    <script>
+        function decreaseQuantity(productId) {
+            $.post("/ShoppingCart/DecreaseQuantity", { productId: productId }, function () {
+                location.reload();
+            });
+        }
+
+        function increaseQuantity(productId) {
+            $.post("/ShoppingCart/IncreaseQuantity", { productId: productId }, function () {
+                location.reload();
+            });
+        }
+    </script>
+
+}

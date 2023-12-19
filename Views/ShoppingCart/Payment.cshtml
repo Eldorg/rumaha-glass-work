@@ -1,0 +1,46 @@
+﻿@model MarketVerse.Models.UserCartAndAddr
+@{
+    ViewBag.Title = "Confirm Address And Pay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main style="margin: 40px 10px 10px 10px; padding: 20px;" class="rounded shadow">
+    <div style="background-color: lightgray;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.CartItems)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Price.ToString("C")</td>
+                        <td>
+                            @item.Quantity
+                        </td>
+                        <td>@(item.Price * item.Quantity)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <h4>Total: @Model.CartItems.Sum(item => item.Price * item.Quantity).ToString("C")</h4>
+    </div>
+
+    <div style="border: 3px solid black;">
+        <p>Address: @Model.User.Providence - @Model.User.City - @Model.User.Address</p>
+        <p>Customer: @Model.User.Name @Model.User.Lastname</p>
+        <form action="/ShoppingCart/AddOrder" method="post">
+            <input name="Username" hidden="hidden" value="@Model.User.Username" />
+            <input name="id" hidden="hidden" value="@Model.User.id" />
+            <input name="TotalCost" hidden="hidden" value="@Model.CartItems.Sum(item => item.Price * item.Quantity)" />
+            <input type="submit" value="Pay Now!" class="btn btn-success">
+        </form>
+    </div>
+</main>
+

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<MarketVerse.Models.Order>
+@{
+    ViewBag.Title = "Your Orders";
+    Layout = "~/Views/Shared/_UserPanelLayout.cshtml";
+}
+
+<main style="background-color: white; margin: 10px;" class="rounded">
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>id</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Products</th>
+            <th>Price</th>
+        </tr>
+        @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.id </td>
+                    <td>@item.OrderDate</td>
+                    <td>@item.OrderStatus</td>
+                    <td>
+                        @item.Products
+                    </td>
+                    <td>@item.TotalPrice</td>
+                </tr>
+            }
+    </table>
+</main>

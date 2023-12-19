@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("Styles", required: false)
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#tiny',
+            plugins: [
+                'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+                'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+                'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
+                'bullist numlist checklist outdent indent | removeformat | code table help'
+        })
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #5C8374;
+            text-decoration-color: #93B1A6;
+            color: #ffffff;
+            width: 99%!important;
+        }
+
+        .navbar {
+            background-color: #040D12 !important;
+            height: 50px;
+            color: #ffffff;
+        }
+
+        .card {
+            background-color: #183D3D;
+        }
+
+            .card ul {
+                list-style: none;
+            }
+
+            .card li {
+                padding: 10px 0;
+            }
+
+                .card li a {
+                    text-decoration: none;
+                    color: #93B1A6;
+                    background-color: #183D3D;
+                    padding: 10px 0px;
+                    display: block;
+                    transition: background-color 0.3s;
+                    font-family: Arial, sans-serif;
+                    font-size: 16px;
+                }
+
+                    .card li a:hover {
+                        background-color: #27005D;
+                        color: #fff;
+                    }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/home/index" style="color: white;">MarketVerse</a>
+            <form class="form-inline mx-auto">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="https://imagedelivery.net/5MYSbk45M80qAwecrlKzdQ/5b626467-d89f-4bcb-cc8e-816418a6a300/preview" alt="Profile Image" width=40" height="40">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="menuDropdown">
+                    <a class="dropdown-item" href="/Home/Index">Visit Site</a>
+                    <a class="dropdown-item" href="/AdminPanel/Logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <ul>
+                        <li><a href="/Users">Manage Users</a></li>
+                        <li><a href="/Products"> Manage Products</a></li>
+                        <li><a href="/Orders"> Manage Orders</a></li>
+                        <li><a href="/Categories"> Manage Categories</a></li>
+                        <li><a href="/Subcategories"> Manage Subcategories</a></li>
+                        <li><a href="/AdminPanel/Statics"> Manage Statics</a></li>
+                        <li><a href="/AdminPanel/SiteSettings"> Site Settings</a></li>
+                        <li><a href="/Home/Index">View Site</a></li>
+                        <li><a href="/AdminPanel/Logout">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+
+            @if (ViewBag.pm != null)
+            {
+                <div id="myAlert" class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    @ViewBag.pm
+                </div>
+            }
+                @RenderBody()
+            </div>
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Automatically close the alert after 10 seconds (10000 milliseconds)
+        setTimeout(function () {
+            $('#myAlert').alert('close');
+        }, 10000);
+    </script>
+</body>
+</html>

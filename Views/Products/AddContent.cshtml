@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Add a new Content";
+    Layout = "~/Views/Shared/_AdminPanelLayout.cshtml";
+}
+
+
+
+<main>
+    <form action="/Products/AddContent" method="post">
+        Title: <input class="form-control" name="Title" />
+        Content:
+        <textarea name="Text" id="tiny"></textarea>
+        <br />
+        <input type="submit" value="Create Post!" class="btn btn-success" />
+        <a class="btn btn-danger" href="/Products/Index">Back to Product List</a>
+    </form>
+</main>
+

@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+            @RenderSection("Styles", required: false)
+
+        body {
+            background-color: #2f2fa2;
+        }
+        .PBP{
+            padding: 20px;
+            background-color: #DAAD86;
+            margin: 10px;
+        }
+        .P{
+            padding: 25px;
+            background: #BC986A;
+            margin: 10px;
+        }
+        .PBV{
+            padding: 30px;
+            background-color: #FBEEC1;
+            margin: 10px;
+        }
+        main {
+            background-color: #F5F5F5;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: #f8f9fa;
+            }
+    </style>
+</head>
+<body>
+    <div>
+
+        @if (ViewBag.pm != null)
+        {
+            <div id="myAlert" class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                @ViewBag.pm
+            </div>
+        }
+        @Html.Partial("Navbar")
+        @RenderBody()
+        @Html.Partial("Footer");
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        setTimeout(function () {
+            $('#myAlert').alert('close');
+        }, 10000);
+    </script>
+
+    <script>
+        function decreaseQuantity(productId) {
+            $.post("/ShoppingCart/DecreaseQuantity", { productId: productId }, function () {
+                location.reload();
+            });
+        }
+
+        function increaseQuantity(productId) {
+            $.post("/ShoppingCart/IncreaseQuantity", { productId: productId }, function () {
+                location.reload();
+            });
+        }
+        $(document).ready(function () {
+            // Enable the carousel
+            $('#infinite-carousel').carousel();
+
+            // Automatically advance the carousel every 3 seconds
+            setInterval(function () {
+                $('#infinite-carousel').carousel('next');
+            }, 12000);
+
+            // Reset the carousel to the first item when it reaches the end
+            $('#infinite-carousel').on('slid.bs.carousel', function () {
+                if ($('.carousel-item:last').hasClass('active')) {
+                    setTimeout(function () {
+                        $('#infinite-carousel').carousel('to', 0);
+                    }, 3000); // Delay the reset for smooth transition
+                }
+            });
+        });
+    </script>
+</body>
+</html>
